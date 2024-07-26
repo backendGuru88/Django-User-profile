@@ -1,0 +1,74 @@
+<!-- {% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        /* button a{
+            color: aliceblue;
+            background-color: blue;
+            
+        } */
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    {% if username %}
+        <p>Hello, {{ username }}!</p>
+    {% else %}
+        <p>Hello, Guest!</p>
+        <button type="submit"><a href="{% url 'signup/' %}">Login</a></button>
+        
+    {% endif %}
+    
+</body>
+</html> -->
+
+<!-- home.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        .custom-button {
+            background-color: #2326ce;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .custom-button a {
+            color: white;
+            text-decoration: none;
+        }
+        .custom-button:hover{
+            background-color: yellow;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    {% if username %}
+        <p>Hello, {{ username }}!</p>
+        {% if request.user.profile.profile_picture %}
+            <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture" style="border-radius: 50%; width: 200px; height: 200px; margin-top: 40px; margin-bottom: 30px;">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ profile_form.as_p }}
+            <button type="submit" class="custom-button">Upload</button>
+        </form>
+    {% else %}
+        <p>Hello, Guest!</p>
+        <button type="submit" class="custom-button"><a href="{% url 'signup/' %}">Login</a></button>
+    {% endif %}
+</body>
+</html>
